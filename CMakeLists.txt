@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(functions CXX)
+project(figure1 CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -18,8 +18,8 @@ if(MSVC)
 endif()
 
 # Объявляем библиотеку
-add_library(functions SHARED "include/functions/functions.h" "src/functions.cc")
-target_include_directories(functions PUBLIC "include")
+add_library(figure1 SHARED "include/figure1/figure1.h" "src/figure1.cc")
+target_include_directories(figure1 PUBLIC "include")
 
 # Подключаем googletest
 include(FetchContent)
@@ -28,6 +28,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # Объявляем тесты
-add_executable(functions_tests "tests/functions_tests.cc")
-target_link_libraries(functions_tests functions GTest::gtest_main)
+add_executable(figure1_tests "tests/figure1_tests.cc")
+target_link_libraries(figure1_tests figure1 GTest::gtest_main)
 
