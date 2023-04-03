@@ -21,49 +21,9 @@ class Figure {
 	Point points[n];
 public:
 	Figure(typeFigure type, Point* points);
-	double P() {
-		switch (type) {
-		case Circle:
-			return 2 * PI * sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2));
-			break;
-		case Triangle:
-			return (((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2);
-			break;
-		case Rectangle:
-			return (abs(points[1].get_x() - points[0].get_x()) + (points[1].get_y() - points[0].get_y())) * 2;
-			break;
-		default:
-			break;
-		}
-	}
-	double S() {
-		switch (type) {
-		case Circle:
-			return PI * pow(sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + (points[1].get_y() - points[0].get_y(), 2)), 2);
-			break;
-		case Triangle:
-			return sqrt((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2)))) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2)))) * (((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2))))));
-			break;
-		case Rectangle:
-			return  abs(points[1].get_x() - points[0].get_x()) * (points[1].get_y() - points[0].get_y());
-			break;
-		default:
-			break;
-		}
-	}
-	std::string get_type() {
-		switch (type)
-		{
-		case Circle:
-			return "Circle";
-		case Triangle:
-			return "Triangle";
-		case Rectangle:
-			return "Rectangle";
-		default:
-			throw std::runtime_error("Type error");
-		}
-	}
+	double P() const;
+	double S() const;
+	std::string get_type() const;
 };
 
 class Container {

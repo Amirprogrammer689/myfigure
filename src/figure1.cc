@@ -11,7 +11,51 @@ Figure::Figure(typeFigure type, Point* points){
 		this->points[i] = points[i];
 	}
 }
-/*#include <string>
+double Figure::P() const {
+	switch (type) {
+	case Circle:
+		return 2 * PI * sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2));
+		break;
+	case Triangle:
+		return (((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2);
+		break;
+	case Rectangle:
+		return (abs(points[1].get_x() - points[0].get_x()) + (points[1].get_y() - points[0].get_y())) * 2;
+		break;
+	default:
+		break;
+	}
+}
+double Figure::S() const {
+	switch (type) {
+	case Circle:
+		return PI * pow(sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + (points[1].get_y() - points[0].get_y(), 2)), 2);
+		break;
+	case Triangle:
+		return sqrt((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2)))) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2)))) * (((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2))))));
+		break;
+	case Rectangle:
+		return  abs(points[1].get_x() - points[0].get_x()) * (points[1].get_y() - points[0].get_y());
+		break;
+	default:
+		break;
+	}
+}
+std::string Figure::get_type() const {
+	switch (type)
+	{
+	case Circle:
+		return "Circle";
+	case Triangle:
+		return "Triangle";
+	case Rectangle:
+		return "Rectangle";
+	default:
+		throw std::runtime_error("Type error");
+	}
+}
+/*#pragma once
+#include <string>
 #include <cmath>
 #include <stdexcept>
 #define PI 3.14
@@ -23,30 +67,26 @@ class Point {
 public: 
 	Point() {}
 	Point(double x, double y) : x(x), y(y) {}
-	double get_x();
-	double get_y();
+	double get_x() const;
+	double get_y() const;
 };
 
 class Figure {
 	static const int n = 3;
 	typeFigure type;
-	Point points[3];
+	Point points[n];
 public:
-	Figure(typeFigure type, Point* points) {
-		this->type = type;
-		for (int i = 0; i < n; ++i) {
-			this->points[i] = points[i];
-		}
-	}
+	Figure(typeFigure type, Point* points);
 	double P() {
 		switch (type) {
 		case Circle:
 			return 2 * PI * sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2));
 			break;
 		case Triangle:
-			return (sqrt)
+			return (((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2);
 			break;
 		case Rectangle:
+			return (abs(points[1].get_x() - points[0].get_x()) + (points[1].get_y() - points[0].get_y())) * 2;
 			break;
 		default:
 			break;
@@ -58,8 +98,10 @@ public:
 			return PI * pow(sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + (points[1].get_y() - points[0].get_y(), 2)), 2);
 			break;
 		case Triangle:
+			return sqrt((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2)))) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2)))) * (((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2))))));
 			break;
 		case Rectangle:
+			return  abs(points[1].get_x() - points[0].get_x()) * (points[1].get_y() - points[0].get_y());
 			break;
 		default:
 			break;
@@ -78,13 +120,6 @@ public:
 			throw std::runtime_error("Type error");
 		}
 	}
-};
-
-class Container {
-	static const int CAPACITY = 10;
-	Figure* list[CAPACITY];
-	int size = 0;
-public:
 };*/
 int sum_stub(int lhs, int rhs) {
     return lhs + rhs;
