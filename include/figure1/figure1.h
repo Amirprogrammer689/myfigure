@@ -30,6 +30,7 @@ public:
 			return (((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2);
 			break;
 		case Rectangle:
+			return (abs(points[1].get_x() - points[0].get_x()) + (points[1].get_y() - points[0].get_y())) * 2;
 			break;
 		default:
 			break;
@@ -44,6 +45,7 @@ public:
 			return sqrt((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2)))) * ((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2)))) * (((((sqrt(pow(points[1].get_x() - points[0].get_x(), 2) + pow(points[1].get_y() - points[0].get_y(), 2))) + (sqrt(pow(points[2].get_x() - points[1].get_x(), 2) + pow(points[2].get_y() - points[1].get_y(), 2))) + (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2)))) / 2) - (sqrt(pow(points[0].get_x() - points[2].get_x(), 2) + pow(points[0].get_y() - points[2].get_y(), 2))))));
 			break;
 		case Rectangle:
+			return  abs(points[1].get_x() - points[0].get_x()) * (points[1].get_y() - points[0].get_y());
 			break;
 		default:
 			break;
