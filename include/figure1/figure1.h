@@ -1,15 +1,14 @@
 #pragma once
 #include <string>
-#include <cmath>
-#include <stdexcept>
+
 #define PI 3.14
-enum typeFigure {Circle,  Triangle, Rectangle};
+enum typeFigure {Circle, Triangle, Rectangle};
 
 class Point {
 	double x;
 	double y;
 public: 
-	Point() {}
+	Point() : x(), y() {}
 	Point(double x, double y) : x(x), y(y) {}
 	double get_x() const;
 	double get_y() const;
@@ -17,8 +16,8 @@ public:
 
 class Figure {
 	static const int n = 3;
-	typeFigure type;
-	Point points[n];
+	typeFigure _type;
+	Point _points[n];
 public:
 	Figure(typeFigure type, Point* points);
 	double P() const;
@@ -26,12 +25,10 @@ public:
 	std::string get_type() const;
 };
 
-class Container {
+class FigureList {
 	static const int CAPACITY = 10;
-	Figure* list[CAPACITY];
+	Figure List[CAPACITY];
 	int size = 0;
 public:
 };
-
-
-int sum_stub(int lhs, int rhs);
+/*int sum_stub(int lhs, int rhs); */
