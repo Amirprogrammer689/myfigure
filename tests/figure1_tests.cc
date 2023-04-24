@@ -15,7 +15,7 @@ TEST(FigureAreaTest, TestForCircle) {
     Point points[3] = { {0,0}, {0,3}, {6,0} };
     Figure Circle1(Circle, points);
     double S1 = Circle1.S();
-    EXPECT_NEAR(S1, 9.42, PI);
+    EXPECT_NEAR(S1, 28.26, PI);
 }
 
 TEST(FigurePerimeterTest, TestForTriangle) {

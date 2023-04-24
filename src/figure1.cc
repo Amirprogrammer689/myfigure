@@ -19,11 +19,15 @@ Figure::Figure(typeFigure type, Point* points){
 double Figure::P() const {
 	switch (_type) {
 	case Circle:
-		return 2 * PI * sqrt(pow(_points[0].get_x() - _points[1].get_x(), 2) + pow(_points[0].get_y() - _points[1].get_y(), 2));
+		return 2 * PI * sqrt((_points[0].get_x() - _points[1].get_x()) * (_points[0].get_x() - _points[1].get_x()) + (_points[0].get_y() - _points[1].get_y()) * (_points[0].get_y() - _points[1].get_y()));
+		//return 2 * PI * sqrt(pow(_points[0].get_x() - _points[1].get_x(), 2) + pow(_points[0].get_y() - _points[1].get_y(), 2));
 	case Triangle: {
-		double a = sqrt(pow(_points[1].get_x() - _points[0].get_x(), 2) + pow(_points[1].get_y() - _points[0].get_y(), 2));
-		double b = sqrt(pow(_points[2].get_x() - _points[1].get_x(), 2) + pow(_points[2].get_y() - _points[1].get_y(), 2));
-		double c = sqrt(pow(_points[0].get_x() - _points[2].get_x(), 2) + pow(_points[0].get_y() - _points[2].get_y(), 2));
+		double a = sqrt((_points[1].get_x() - _points[0].get_x()) * (_points[1].get_x() - _points[0].get_x()) + (_points[1].get_y() - _points[0].get_y()) * (_points[1].get_y() - _points[0].get_y()));
+		//double a = sqrt(pow(_points[1].get_x() - _points[0].get_x(), 2) + pow(_points[1].get_y() - _points[0].get_y(), 2));
+		double b = sqrt((_points[2].get_x() - _points[1].get_x()) * (_points[2].get_x() - _points[0].get_x()) + (_points[1].get_y() - _points[0].get_y()) * (_points[1].get_y() - _points[0].get_y()));
+		//double b = sqrt(pow(_points[2].get_x() - _points[1].get_x(), 2) + pow(_points[2].get_y() - _points[1].get_y(), 2));
+		double c = sqrt((_points[0].get_x() - _points[2].get_x()) * (_points[0].get_x() - _points[2].get_x()) + (_points[0].get_y() - _points[2].get_y()) * (_points[0].get_y() - _points[2].get_y()));
+		//double c = sqrt(pow(_points[0].get_x() - _points[2].get_x(), 2) + pow(_points[0].get_y() - _points[2].get_y(), 2));
 		return ((a + b + c) / 2);
 	}
 	case Rectangle:
@@ -35,11 +39,15 @@ double Figure::P() const {
 double Figure::S() const {
 	switch (_type) {
 	case Circle:
-		return PI * pow(sqrt(pow(_points[0].get_x() - _points[1].get_x(), 2) + (_points[0].get_y() - _points[1].get_y(), 2)), 2);
+		return PI * sqrt((_points[0].get_x() - _points[1].get_x()) * (_points[0].get_x() - _points[1].get_x()) + (_points[0].get_y() - _points[1].get_y()) * (_points[0].get_y() - _points[1].get_y())) * sqrt((_points[0].get_x() - _points[1].get_x()) * (_points[0].get_x() - _points[1].get_x()) + (_points[0].get_y() - _points[1].get_y()) * (_points[0].get_y() - _points[1].get_y()));
+		//return PI * pow(sqrt(pow(_points[0].get_x() - _points[1].get_x(), 2) + pow(_points[0].get_y() - _points[1].get_y(), 2)), 2);
 	case Triangle: {
-		double a = sqrt(pow(_points[1].get_x() - _points[0].get_x(), 2) + pow(_points[1].get_y() - _points[0].get_y(), 2));
-		double b = sqrt(pow(_points[2].get_x() - _points[1].get_x(), 2) + pow(_points[2].get_y() - _points[1].get_y(), 2));
-		double c = sqrt(pow(_points[0].get_x() - _points[2].get_x(), 2) + pow(_points[0].get_y() - _points[2].get_y(), 2));
+		double a = sqrt(((_points[1].get_x() - _points[0].get_x()) * (_points[1].get_x() - _points[0].get_x())) + (_points[1].get_y() - _points[0].get_y())* (_points[1].get_y() - _points[0].get_y()));
+		//double a = sqrt(pow(_points[1].get_x() - _points[0].get_x(), 2) + pow(_points[1].get_y() - _points[0].get_y(), 2));
+		double b = sqrt((_points[2].get_x() - _points[1].get_x()) * (_points[2].get_x() - _points[0].get_x()) + (_points[1].get_y() - _points[0].get_y()) * (_points[1].get_y() - _points[0].get_y()));
+		//double b = sqrt(pow(_points[2].get_x() - _points[1].get_x(), 2) + pow(_points[2].get_y() - _points[1].get_y(), 2));
+		double c = sqrt((_points[0].get_x() - _points[2].get_x()) * (_points[0].get_x() - _points[2].get_x()) + (_points[0].get_y() - _points[2].get_y()) * (_points[0].get_y() - _points[2].get_y()));
+		//double c = sqrt(pow(_points[0].get_x() - _points[2].get_x(), 2) + pow(_points[0].get_y() - _points[2].get_y(), 2));
 		double p = (a + b + c) / 2;
 		return (sqrt(p * (p - a) * (p - b) * (p - c)));
 	}
