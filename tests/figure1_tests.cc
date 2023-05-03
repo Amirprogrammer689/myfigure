@@ -1,71 +1,90 @@
 #include <gtest/gtest.h>
-
 #include <figure1/figure1.h>
 
 using namespace std;
+using namespace Figures;
 
 TEST(FigurePerimeterTest, TestForCircle){
-    Point points[3] = { {0,0}, {0,3}, {6,0} };
-    Figure Circle1(Circle, points);
+    Point _central_point; Point _circle_point;
+    _central_point = Point(0, 0);
+    _circle_point = Point(0, 4);
+    Figure Circle1 = Figure(Circle, _central_point, _circle_point);
     double P1 = Circle1.P();
-    EXPECT_NEAR(P1, 18.84, PI);
+    EXPECT_EQ(P1, 25.12);
 }
 
 TEST(FigureAreaTest, TestForCircle) {
-    Point points[3] = { {0,0}, {0,3}, {6,0} };
-    Figure Circle1(Circle, points);
+    Point _central_point; Point _circle_point;
+    _central_point = Point(0, 0);
+    _circle_point = Point(0, 4);
+    Figure Circle1 = Figure(Circle, _central_point, _circle_point); 
     double S1 = Circle1.S();
-    EXPECT_NEAR(S1, 28.26, PI);
+    EXPECT_EQ(S1, 50.24);
 }
 
 TEST(FigurePerimeterTest, TestForTriangle) {
-    Point points[3] = { {0,0}, {0,3}, {6,0} };
-    Figure Triangle1(Triangle, points);
-    double P1 = Triangle1.P();
-    EXPECT_NEAR(P1, 7.8541, PI);
+    Point _left_bottom_point; Point _right_top_point; Point _right_bottom_point;
+    _left_bottom_point = Point(0, 0);
+    _right_top_point = Point(0, 3);
+    _right_bottom_point = Point(4, 0);
+    Figure Triangle1 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
+    double P2 = Triangle1.P();
+    EXPECT_EQ(P2, 6);
 }
 
 TEST(FigureAreaTest, TestForTriangle) {
-    Point points[3] = { {0,0}, {0,3}, {6,0} };
-    Figure Triangle1(Triangle, points);
-    double S1 = Triangle1.S();
-    EXPECT_NEAR(S1, 9, PI);
+    Point _left_bottom_point; Point _right_top_point; Point _right_bottom_point;
+    _left_bottom_point = Point(0, 0);
+    _right_top_point = Point(0, 3);
+    _right_bottom_point = Point(4, 0);
+    Figure Triangle1 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
+    double S2 = Triangle1.S();
+    EXPECT_EQ(S2, 6);
 }
 
 TEST(FigurePerimeterTest, TestForRectangle) {
-    Point points[2] = { {0,0}, {3,9} };
-    Figure Rectangle1(Rectangle, points);
-    double P1 = Rectangle1.P();
-    EXPECT_NEAR(P1, 24, PI);
+    Point _left_bottom_point;
+    Point _right_top_point;
+    _left_bottom_point = Point(-2, -2);
+    _right_top_point = Point(3, 2);
+    Figure f = Figure(Rectangle, _left_bottom_point, _right_top_point);
+    EXPECT_EQ(f.P(), 18);
 }
 
 TEST(FigureAreaTest, TestForRectangle) {
-    Point points[2] = { {0,0}, {3,9} };
-    Figure Rectangle1(Rectangle, points);
-    double S1 = Rectangle1.S();
-    EXPECT_NEAR(S1, 27, PI);
-}
-/*TEST(Figure1Tests, SumStubTest1) {
-    // Arrange
-    int lhs = 2;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 5);
+    Point _left_bottom_point; Point _right_top_point;
+    _left_bottom_point = Point(-2, 1);
+    _right_top_point = Point(2, 3);
+    Figure Rectangle1 = Figure(Rectangle, _left_bottom_point, _right_top_point);
+    double S3 = Rectangle1.S();
+    EXPECT_EQ(S3, 8);
 }
 
-TEST(Figure1Tests, SumStubTest2) {
-    // Arrange
-    int lhs = -1;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 2);
+TEST(FigureMinRectTests, TestForMinCircle) {
+    Point _left_bottom_point; Point _right_top_point;
+    _left_bottom_point = Point(-4, 0);
+    _right_top_point = Point(0, 4);
+    Figure Circle2 = Figure(Circle, _left_bottom_point, _right_top_point);
+    EXPECT_EQ(Circle2.get_min_rectangle().get_left_bottom_point().get_x(), -4);
+    EXPECT_EQ(Circle2.get_min_rectangle().get_right_top_point().get_y(), 4);
 }
-*/
+
+TEST(FigureMinRectTests, TestForMinRectangle) {
+    Point _left_bottom_point; Point _right_top_point;
+    _left_bottom_point = Point(0, 0);
+    _right_top_point = Point(4, 3);
+    Figure Rectangle2 = Figure(Rectangle, _left_bottom_point, _right_top_point);
+    EXPECT_EQ(Rectangle2.get_min_rectangle().get_left_bottom_point().get_x(), 0);
+    EXPECT_EQ(Rectangle2.get_min_rectangle().get_right_top_point().get_y(), 3);
+}
+
+TEST(FigureMinRectTests, TestForMinTriangle) {
+    Point _left_bottom_point; Point _right_top_point; Point _right_bottom_point;
+    _left_bottom_point = Point(0, 0);
+    _right_top_point = Point(3, 4);
+    _right_bottom_point = Point(3, 0);
+    Figure Triangle2 = Figure(Triangle, _left_bottom_point, _right_bottom_point, _right_top_point);
+    EXPECT_EQ(Triangle2.get_min_rectangle().get_left_bottom_point().get_x(), 0);
+    EXPECT_EQ(Triangle2.get_min_rectangle().get_right_top_point().get_y(), 4);
+}
+

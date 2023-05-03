@@ -2,3 +2,6 @@
 #include <cmath>
 #include <stdexcept>
 
+using namespace std;
+using namespace Figures;
+
