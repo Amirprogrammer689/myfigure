@@ -12,7 +12,7 @@ Figurelist::Figurelist() {
 Figurelist::Figurelist(Figure figure[], int _size) {
 	size = _size;
 	for (int i = 0; i < _size; ++i) {
-		this->data[i] = figure[i];
+		data[i] = figure[i];
 	}
 }
 
@@ -50,7 +50,7 @@ void Figurelist::insert(int index, Figure figure) {
 		throw std::runtime_error("Index out of range.");
 	}
 	//сдвиг элементов массива
-	for (int i = size - 1; i >= index; --i) {
+	for (int i = size; i >= index; --i) {
 		data[i] = data[i - 1];
 	}
 	data[index] = figure;
@@ -64,7 +64,10 @@ void Figurelist::clear() {
 
 void Figurelist::remove(int index) {
 	if (size == 0) {
-		throw std::runtime_error("Plane is empty.");
+		throw std::runtime_error("List is empty.");
+	}
+	if (index < 0 || index >= size) {
+		throw std::runtime_error("Index out of range.");
 	}
 	for (int i = index; i < size - 1; ++i) {
 		data[i] = data[i + 1];
@@ -78,9 +81,9 @@ int Figurelist::find_figure_min_square() const {
 		throw std::runtime_error("Figurelist is empty");
 	}
 	int index = 0;
-	double min_square = this->data[0].S();
+	double min_square = data[0].get_area();
 	for (int i = 1; i < size; ++i) {
-		double current_square = data[i].S();
+		double current_square = data[i].get_area();
 		if (current_square < min_square) {
 			index = i;
 			min_square = current_square;

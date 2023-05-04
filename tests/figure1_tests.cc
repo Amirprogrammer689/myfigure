@@ -9,7 +9,7 @@ TEST(FigurePerimeterTest, TestForCircle) {
     _central_point = Point(0, 0);
     _circle_point = Point(0, 4);
     Figure Circle1 = Figure(Circle, _central_point, _circle_point);
-    double P1 = Circle1.P();
+    double P1 = Circle1.get_perimetr();
     EXPECT_EQ(P1, 25.12);
 }
 
@@ -18,7 +18,7 @@ TEST(FigureAreaTest, TestForCircle) {
     _central_point = Point(0, 0);
     _circle_point = Point(0, 4);
     Figure Circle1 = Figure(Circle, _central_point, _circle_point); 
-    double S1 = Circle1.S();
+    double S1 = Circle1.get_area();
     EXPECT_EQ(S1, 50.24);
 }
 
@@ -28,7 +28,7 @@ TEST(FigurePerimeterTest, TestForTriangle) {
     _right_top_point = Point(0, 3);
     _right_bottom_point = Point(4, 0);
     Figure Triangle1 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
-    double P2 = Triangle1.P();
+    double P2 = Triangle1.get_perimetr();
     EXPECT_EQ(P2, 6);
 }
 
@@ -38,7 +38,7 @@ TEST(FigureAreaTest, TestForTriangle) {
     _right_top_point = Point(0, 3);
     _right_bottom_point = Point(4, 0);
     Figure Triangle1 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
-    double S2 = Triangle1.S();
+    double S2 = Triangle1.get_area();
     EXPECT_EQ(S2, 6);
 }
 
@@ -48,7 +48,7 @@ TEST(FigurePerimeterTest, TestForRectangle) {
     _left_bottom_point = Point(0, 0);
     _right_top_point = Point(3, 9);
     Figure f = Figure(Rectangle, _left_bottom_point, _right_top_point);
-    EXPECT_EQ(f.P(), 24);
+    EXPECT_EQ(f.get_perimetr(), 24);
 }
 
 TEST(FigureAreaTest, TestForRectangle) {
@@ -56,7 +56,7 @@ TEST(FigureAreaTest, TestForRectangle) {
     _left_bottom_point = Point(0, 0);
     _right_top_point = Point(3, 9);
     Figure Rectangle1 = Figure(Rectangle, _left_bottom_point, _right_top_point);
-    double S3 = Rectangle1.S();
+    double S3 = Rectangle1.get_area();
     EXPECT_EQ(S3, 27);
 }
 

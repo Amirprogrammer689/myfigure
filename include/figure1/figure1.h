@@ -10,11 +10,11 @@ namespace Figures {
 	};
 
 	class Point {
-		double x;
-		double y;
+		double _x;
+		double _y;
 	public:
-		Point() : x(), y() {}
-		Point(double x, double y) : x(x), y(y) {}
+		Point() : _x(), _y() {}
+		Point(double _x, double _y) : _x(_x), _y(_y) {}
 		double get_x() const;
 		double get_y() const;
 	};
@@ -35,8 +35,8 @@ namespace Figures {
 		typeFigure get_figure_type() const;
 		Point get_left_bottom_point() const;
 		Point get_right_top_point() const;
-		double P() const;
-		double S() const;
+		double get_perimetr() const;
+		double get_area() const;
 		Figure get_min_rectangle() const;
 	};
 

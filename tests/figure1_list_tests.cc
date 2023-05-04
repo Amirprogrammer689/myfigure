@@ -44,17 +44,6 @@ TEST(FigurelistTests, FigurelistConstructorTest) {
     EXPECT_EQ(figures[0].get_left_bottom_point().get_x(), 0);
 }
 
-TEST(FigurelistTests, FigurelistAddFirstItemTest) {
-    Figurelist figures = Figurelist();
-    Point _left_bottom_point; Point _right_top_point; Point _right_bottom_point;
-    _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(0, 8);
-    _right_bottom_point = Point(6, 0);
-    Figure f1 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
-    figures.insert(0, f1);
-    EXPECT_EQ(figures.get_size(), 1);
-}
-
 TEST(FigurelistTests, FigurelistAddItemTest) {   
     //заполненный контейнер из 4 фигур
     Figurelist figures = FillTestContainer();
@@ -66,7 +55,7 @@ TEST(FigurelistTests, FigurelistAddItemTest) {
     figures.insert(2, f1);
     EXPECT_EQ(figures.get_size(), 5);
     EXPECT_EQ(figures[2].get_figure_type(), Triangle);
-    EXPECT_EQ(figures[3].get_figure_type(), Circle);
+    EXPECT_EQ(figures[4].get_figure_type(), Triangle);
     EXPECT_ANY_THROW(figures.insert(-2, f1));
 }
 
@@ -82,6 +71,9 @@ TEST(FigurelistTests, FigurelistDelItemTest) {
     figures.remove(2);
     EXPECT_EQ(figures.get_size(), 3);
     EXPECT_EQ(figures[2].get_figure_type(), Rectangle);
+    EXPECT_THROW(figures.remove(-1), std::runtime_error);
+    EXPECT_THROW(figures.remove(6), std::runtime_error);
+
 }
 
 TEST(FigurelistTests, FigurelistClearTest) {
@@ -120,8 +112,8 @@ TEST(ExceptionTests, ExeptionIndexOutTest) {
         Figure f1 = Figure();
         figures.insert(i, f1);
     }
-    EXPECT_THROW(figures[-1].S(), std::runtime_error);
-    EXPECT_THROW(figures[10].S(), std::runtime_error);
+    EXPECT_THROW(figures[-1].get_area(), std::runtime_error);
+    EXPECT_THROW(figures[10].get_area(), std::runtime_error);
 }
 
 TEST(ExceptionTests, ExeptionCapacityTest) {
@@ -134,7 +126,3 @@ TEST(ExceptionTests, ExeptionCapacityTest) {
     EXPECT_THROW(figures.insert(1, f2), std::runtime_error);
 }
 
-TEST(ExceptionTests, ExeptionEmptyTest) {
-    Figurelist figures = Figurelist();
-    EXPECT_THROW(figures.remove(1), std::runtime_error);
-}

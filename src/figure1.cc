@@ -6,10 +6,10 @@ using namespace std;
 using namespace Figures;
 
 double Point::get_x() const {
-	return x;
+	return _x;
 }
 double Point::get_y() const {
-	return y;
+	return _y;
 }
 
 Figure::Figure() {
@@ -52,7 +52,7 @@ Point Figure::get_right_top_point() const {
 };
 
 //периметр
-double Figure::P() const {
+double Figure::get_perimetr() const {
 	switch (_type) {
 	case Circle: {
 		double a = (_left_bottom_point.get_x() - _right_top_point.get_x());
@@ -81,7 +81,7 @@ double Figure::P() const {
 }
 
 //площадь
-double Figure::S() const {
+double Figure::get_area() const {
 	switch (_type) {
 	case Circle: {
 		double a = (_left_bottom_point.get_x() - _right_top_point.get_x());
