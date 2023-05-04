@@ -4,7 +4,7 @@
 using namespace std;
 using namespace Figures;
 
-TEST(FigurePerimeterTest, TestForCircle){
+TEST(FigurePerimeterTest, TestForCircle) {
     Point _central_point; Point _circle_point;
     _central_point = Point(0, 0);
     _circle_point = Point(0, 4);
@@ -45,19 +45,19 @@ TEST(FigureAreaTest, TestForTriangle) {
 TEST(FigurePerimeterTest, TestForRectangle) {
     Point _left_bottom_point;
     Point _right_top_point;
-    _left_bottom_point = Point(-2, -2);
-    _right_top_point = Point(3, 2);
+    _left_bottom_point = Point(0, 0);
+    _right_top_point = Point(3, 9);
     Figure f = Figure(Rectangle, _left_bottom_point, _right_top_point);
-    EXPECT_EQ(f.P(), 18);
+    EXPECT_EQ(f.P(), 24);
 }
 
 TEST(FigureAreaTest, TestForRectangle) {
     Point _left_bottom_point; Point _right_top_point;
-    _left_bottom_point = Point(-2, 1);
-    _right_top_point = Point(2, 3);
+    _left_bottom_point = Point(0, 0);
+    _right_top_point = Point(3, 9);
     Figure Rectangle1 = Figure(Rectangle, _left_bottom_point, _right_top_point);
     double S3 = Rectangle1.S();
-    EXPECT_EQ(S3, 8);
+    EXPECT_EQ(S3, 27);
 }
 
 TEST(FigureMinRectTests, TestForMinCircle) {
@@ -72,10 +72,10 @@ TEST(FigureMinRectTests, TestForMinCircle) {
 TEST(FigureMinRectTests, TestForMinRectangle) {
     Point _left_bottom_point; Point _right_top_point;
     _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(4, 3);
+    _right_top_point = Point(3, 9);
     Figure Rectangle2 = Figure(Rectangle, _left_bottom_point, _right_top_point);
     EXPECT_EQ(Rectangle2.get_min_rectangle().get_left_bottom_point().get_x(), 0);
-    EXPECT_EQ(Rectangle2.get_min_rectangle().get_right_top_point().get_y(), 3);
+    EXPECT_EQ(Rectangle2.get_min_rectangle().get_right_top_point().get_y(), 9);
 }
 
 TEST(FigureMinRectTests, TestForMinTriangle) {

@@ -39,4 +39,21 @@ namespace Figures {
 		double S() const;
 		Figure get_min_rectangle() const;
 	};
+
+	class Figurelist {
+		static const int CAPACITY = 10;
+		Figure data[CAPACITY];
+		int size;
+	public:
+		Figurelist();
+		Figurelist(Figure figures[], int size);
+		Figure get_figure_by_index(int i) const;
+		int get_size() const;
+		Figure operator[](int index) const;
+		Figure& operator[](int index);
+		void insert(int index, Figure fig);
+		void remove(int index);
+		void clear();
+		int find_figure_min_square() const;
+	};
 }

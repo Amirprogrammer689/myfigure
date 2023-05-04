@@ -18,6 +18,7 @@ Figure::Figure() {
 	_left_bottom_point = Point(-1, -1);
 }
 
+//создание заполненного объекта
 Figure::Figure(typeFigure type, Point left_bottom_point, Point right_bottom_point, Point right_top_point) {
 	if (type != Triangle)
 		throw std::runtime_error("Wrong figure type. It is required two points for a rectangle or an circle");
@@ -41,6 +42,7 @@ typeFigure Figure::get_figure_type() const {
 	return _type;
 }
 
+//геттеры точек
 Point Figure::get_left_bottom_point() const {
 	return _left_bottom_point;
 };
@@ -49,6 +51,7 @@ Point Figure::get_right_top_point() const {
 	return _right_top_point;
 };
 
+//периметр
 double Figure::P() const {
 	switch (_type) {
 	case Circle: {
@@ -77,6 +80,7 @@ double Figure::P() const {
 	}
 }
 
+//площадь
 double Figure::S() const {
 	switch (_type) {
 	case Circle: {
@@ -102,6 +106,7 @@ double Figure::S() const {
 	}
 }
 
+//минимальный обрамл€ющий треугольник
 Figure Figure::get_min_rectangle() const {
 	if (_type == Triangle) {
 		return Figure(Rectangle, _left_bottom_point, Point(_right_bottom_point.get_x(), _right_top_point.get_y()));
