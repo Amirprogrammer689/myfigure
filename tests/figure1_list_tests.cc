@@ -73,7 +73,6 @@ TEST(FigurelistTests, FigurelistDelItemTest) {
     EXPECT_EQ(figures[2].get_figure_type(), Rectangle);
     EXPECT_THROW(figures.remove(-1), std::runtime_error);
     EXPECT_THROW(figures.remove(6), std::runtime_error);
-
 }
 
 TEST(FigurelistTests, FigurelistClearTest) {
