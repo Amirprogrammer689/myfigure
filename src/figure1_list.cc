@@ -5,41 +5,49 @@
 using namespace std;
 using namespace Figures;
 
-Figurelist::Figurelist() {
-	size = 0;
+Figurelist::Figurelist() : _figure(nullptr), _size(0) {}
+
+Figurelist::Figurelist(const Figurelist& copy) : _figure(new FigurePtr[copy._size]), _size(copy._size)
+{
+	for (int i = 0; i < _size; ++i)
+		_figure[i] = new Figure(*copy._figure[i]);
 }
 
-Figurelist::Figurelist(Figure figure[], int _size) {
-	size = _size;
-	for (int i = 0; i < _size; ++i) {
-		data[i] = figure[i];
-	}
+Figurelist& Figurelist::operator=(Figurelist copy) {
+	swap(copy);
+	return *this;
 }
 
-
-Figure Figurelist::get_figure_by_index(int index) const {
-	if (index < 0 || index >= size) {
-		throw std::runtime_error("Index out of range.");
-	}
-	return data[index];
+const Figure& Figurelist::get_figure_by_index(int index) const {
+	if (index < 0 || _size <= index)
+		throw runtime_error("[FigureList::get_figure_by_index] Invalid index");
+	return *_figure[index];
 }
 
 int Figurelist::get_size() const {
-	return size;
-}
-
-Figure Figurelist::operator[](int index) const {
-	if (index < 0 || index >= size) {
-		throw std::runtime_error("Index out of range.");
-	}
-	return data[index];
+	return _size;
 }
 
 Figure& Figurelist::operator[](int index) {
-	if (index < 0 || index >= size) {
-		throw std::runtime_error("Index out of range.");
-	}
-	return data[index];
+	if (index < 0 || _size <= index)
+		throw runtime_error("Invalid index");
+	return *_figure[index];
+}
+
+const Figure& Figurelist::operator[](int index) const {
+	if (index < 0 || _size <= index)
+		throw runtime_error("[FigureList::operator[]] Index is out of range");
+	return *_figure[index];
+}
+
+void Figurelist::add(const Figure& f) {
+	auto figure = new Figure * [_size + 1];
+	for (int i = 0; i < _size; i++)
+		figure[i] = _figure[i];
+	figure[_size] = new Figure(f);
+	delete[] _figure;
+	_figure = figure;
+	++_size;
 }
 
 void Figurelist::insert(int index, Figure figure) {
