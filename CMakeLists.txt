@@ -28,7 +28,7 @@ add_library(figure1 SHARED
     "include/figure1/figure1.h"
     "src/figure1.cc"
     "src/figure1_list.cc"
-)
+ )
 target_include_directories(figure1 PUBLIC "include")
 
 # Объявляем тесты
@@ -37,4 +37,6 @@ add_executable(figure1_tests
     "tests/figure1_tests.cc"
 )
 target_link_libraries(figure1_tests figure1 GTest::gtest_main)
-
+# Объявляем исполняемый файл
+add_executable(main "include/figure1/menu_figure1.h" "src/menu_figure1.cc" "src/main.cc")
+target_link_libraries(main figure1)

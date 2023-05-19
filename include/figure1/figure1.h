@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <cassert>
 #include <cmath>
 #include <stdexcept>
@@ -24,7 +23,6 @@ namespace Figures {
 	};
 
 	class Figure;
-
 	using FigurePtr = Figure*;
 
 	class Figure {
@@ -53,15 +51,14 @@ namespace Figures {
 	std::ostream& operator<<(std::ostream& stream, const Figure& fig);
 
 	class Figurelist {
-
 	private:
 		FigurePtr* _figure;
 		int _size;
 
 	public:
 		Figurelist();
-		FigureList(const FigureList& copy);
-		FigureList& operator=(FigureList copy);
+		Figurelist(const Figurelist& copy);
+		Figurelist& operator=(Figurelist copy);
 		const Figure& get_figure_by_index(int i) const;
 		int get_size() const;
 		const Figure& operator[](int index) const;
@@ -70,9 +67,9 @@ namespace Figures {
 		void insert(int index, Figure fig);
 		void remove(int index);
 		void clear();
-		void swap(FigureList& other);
-		~FigureList();
-		int find_figure_min_square() const;
+		void swap(Figurelist& other);
+		~Figurelist();
+		int find_figure_min_area() const;
 	};
-	std::ostream& operator<<(std::ostream& stream, const FigureList& fig);
+	std::ostream& operator<<(std::ostream& stream, const Figurelist& fig);
 }
