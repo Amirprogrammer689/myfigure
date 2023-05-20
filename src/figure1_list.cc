@@ -38,19 +38,19 @@ const Figure& Figurelist::operator[](int index) const {
 	return *_figure[index];
 }
 
-void Figurelist::add(const Figure& f) {
+void Figurelist::add(const Figure& fig) {
 	auto figure = new Figure * [_size + 1];
 	for (int i = 0; i < _size; ++i)
 		figure[i] = _figure[i];
-	figure[_size] = new Figure(f);
+	figure[_size] = new Figure(fig);
 	delete[] _figure;
 	_figure = figure;
 	++_size;
 }
 
 
-void Figurelist::insert(int index, Figure fig) {
-	if (index < 0 || _size <= index)
+void Figurelist::insert(Figure fig, int index) {
+	if (index < 0 || _size < index)
 		throw runtime_error("[FigureList::insert] Invalid index");
 	auto figure = new Figure * [_size + 1];
 	for (int i = 0; i < _size; ++i)
@@ -91,6 +91,13 @@ Figurelist::~Figurelist() {
 	clear();
 }
 
+std::ostream& Figures::operator<<(std::ostream& stream, const Figurelist& fig) {
+	stream << fig.get_size() << " figure: " << endl;
+	for (int i = 0; i < fig.get_size(); ++i)
+		cout << "  " << i + 1 << ") " << fig[i];
+	return stream;
+}
+
 //минимальная площадь
 int Figurelist::find_figure_min_area() const {
 	if (_size <= 0)
@@ -98,7 +105,7 @@ int Figurelist::find_figure_min_area() const {
 	int index = 0;
 	double min_area = _figure[0]->get_area();
 	for (int i = 1; i < _size; ++i) {
-		float current_area = _figure[i]->get_area();
+		double current_area = _figure[i]->get_area();
 		if (current_area < min_area) {
 			index = i;
 			min_area = current_area;

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <stdexcept>
 #include <iostream>
+#include <string>
 
 namespace Figures {
 	const double PI = 3.14;
@@ -64,12 +65,14 @@ namespace Figures {
 		const Figure& operator[](int index) const;
 		Figure& operator[](int index);
 		void add(const Figure& fig);
-		void insert(int index, Figure fig);
+		void insert(Figure fig, int index);
 		void remove(int index);
 		void clear();
 		void swap(Figurelist& other);
 		~Figurelist();
 		int find_figure_min_area() const;
 	};
+
 	std::ostream& operator<<(std::ostream& stream, const Figurelist& fig);
+
 }

@@ -1,15 +1,14 @@
-#include <figure1/menu_figure1.h>
+#include "figure1/menu_figure1.h"
 #include "figure1/figure1.h"
-#include <Windows.h>
+#include <iostream>
 
 using namespace Figures;
 using namespace menu;
 using namespace std;
 
 int main() {
-	setlocale(LC_ALL, "rus");
-	SetConsoleCP(1251);
-	Figurelist fig;
+	setlocale(LC_ALL, "RU");
+	Figurelist figures;
 	Figure figure;
 
 	menu::text_menu();
@@ -22,53 +21,53 @@ int main() {
 		menu::text_menu();
 
 		if (choice == 57) {
-			fig.clear();
+			figures.clear();
 			break;
 		}
 
 		switch (choice) {
 
 		case 49:
-			fig.add(create_figure());
+			figures.add(create_figure());
 			break;
 
 		case 50:
 			cout << "¬ведите индекс, по которому нужно вставить новую фигуру: ";
 			cin >> index;
-			fig.insert(index, create_figure());
+			figures.insert(create_figure(), index);
 			break;
 
 
 		case 51:
 			cout << "¬ведите индекс, по которому нужно удалить фигуру: ";
 			cin >> index;
-			fig.remove(index);
+			figures.remove(index);
 			break;
 
 		case 52:
 			cout << "¬ведите индекс фигуры, у которой нужно вычислить периметр(P): ";
 			cin >> index;
-			cout << "ѕериметр = " << fig[index].get_perimetr() << endl;
+			cout << "ѕериметр = " << figures[index].get_perimetr() << endl;
 			break;
 
 		case 53:
 			cout << "¬ведите индекс фигуры, у которой нужно вычислить площадь(S): ";
 			cin >> index;
-			cout << "ѕлощадь = " << fig[index].get_area() << endl;
+			cout << "ѕлощадь = " << figures[index].get_area() << endl;
 			break;
 
 		case 54:
 			cout << "¬ведите индекс фигуры, у которой нужно найти минимальный обрамл€ющий пр€моугольник: ";
 			cin >> index;
-			cout << fig[index].get_min_rectangle() << endl;
+			cout << figures[index].get_min_rectangle() << endl;
 			break;
 
 		case 55:
-			cout << "»ндекс фигуры с минимальной площадью" << fig.find_figure_min_area();
+			cout << "»ндекс фигуры с минимальной площадью: " << figures.find_figure_min_area();
 			break;
 
 		case 56:
-			cout << fig;
+			cout << figures;
 			break;
 		}
 
