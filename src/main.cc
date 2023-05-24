@@ -11,8 +11,10 @@ int main() {
 	Figurelist figures;
 	Figure figure;
 
-	menu::text_menu();
+	system("color FC");
 
+	menu::text_menu();
+	
 	while (true) {
 		int choice = menu::get_key();
 		int index = 0;
