@@ -13,48 +13,8 @@ double Point::get_y() const {
 	return _y;
 }
 
-Figure::Figure() {
-	_type = Rectangle;
-	_right_bottom_point = Point(1, 1);
-	_left_bottom_point = Point(-1, -1);
-}
-
-//создание заполненного объекта
-Figure::Figure(typeFigure type, Point left_bottom_point, Point right_bottom_point, Point right_top_point) {
-	if (type != Triangle)
-		throw std::runtime_error("Wrong figure type. It is required two points for a rectangle or an circle");
-
-	_type = type;
-	_left_bottom_point = left_bottom_point;
-	_right_bottom_point = right_bottom_point;
-	_right_top_point = right_top_point;
-}
-
-Figure::Figure(typeFigure type, Point left_bottom_point, Point right_top_point) {
-	if (type == Triangle)
-		throw std::runtime_error("Wrong figure type. It is required four points for a triangle or circle.");
-
-	_type = type;
-	_left_bottom_point = left_bottom_point;
-	_right_top_point = right_top_point;
-}
-
-typeFigure Figure::get_figure_type() const {
-	return _type;
-}
-
-std::string Figure::get_type() const {
-	switch (_type)
-	{
-	case typeFigure::Circle:
-		return "Circle";
-	case typeFigure::Triangle:
-		return "Triangle";
-	case typeFigure::Rectangle:
-		return "Rectangle";
-	default:
-		throw runtime_error("Unknown type");
-	}
+void Point::print()const {
+	cout << "x = " << _x << "y = " << _y << endl;
 }
 
 //геттеры точек
@@ -71,72 +31,93 @@ Point Figure::get_right_top_point() const {
 };
 
 //периметр
-double Figure::get_perimetr() const {
-	switch (_type) {
-	case Circle: {
-		double a = (_left_bottom_point.get_x() - _right_top_point.get_x());
-		double b = (_left_bottom_point.get_y() - _right_top_point.get_y());
-		return 2 * PI * sqrt((a*a) + (b*b));
-	}
-		case Triangle: {
-		double a = sqrt(((_right_top_point.get_x())*(_right_top_point.get_x())) - 2 * _right_top_point.get_x() * _left_bottom_point.get_x() + ((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) + ((_right_top_point.get_y()) * (_right_top_point.get_y())) - 2 * _left_bottom_point.get_y() * _right_top_point.get_y() + (_left_bottom_point.get_y() * _left_bottom_point.get_y()));
-		double b = sqrt(((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) - 2 * _right_bottom_point.get_x() * _right_top_point.get_x() + ((_right_top_point.get_x()) * (_right_top_point.get_x())) + ((_right_bottom_point.get_y()) * (_right_bottom_point.get_y())) - 2 * _right_top_point.get_y() * _right_bottom_point.get_y() + (_right_top_point.get_y() * _right_top_point.get_y()));
-		double c = sqrt(((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) - 2 * _left_bottom_point.get_x() * _right_bottom_point.get_x() + ((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) + ((_left_bottom_point.get_y()) * (_left_bottom_point.get_y())) - 2 * _right_bottom_point.get_y() * _left_bottom_point.get_y() + (_right_bottom_point.get_y() * _right_bottom_point.get_y()));
-		return ((a + b + c) / 2);
-	}
-	case Rectangle: {
-		double a = _right_top_point.get_x() - _left_bottom_point.get_x();
-		double b = _right_top_point.get_y() - _left_bottom_point.get_y();
-		return 2 * (a + b);
-	}
-	default:
-		throw std::runtime_error("Type error");
-	}
+double Circle::get_perimetr() const {
+	double a = (_left_bottom_point.get_x() - _right_top_point.get_x());
+	double b = (_left_bottom_point.get_y() - _right_top_point.get_y());
+	return 2 * PI * sqrt((a * a) + (b * b));
+}
+
+double Triangle::get_perimetr() const {
+	double a = sqrt(((_right_top_point.get_x()) * (_right_top_point.get_x())) - 2 * _right_top_point.get_x() * _left_bottom_point.get_x() + ((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) + ((_right_top_point.get_y()) * (_right_top_point.get_y())) - 2 * _left_bottom_point.get_y() * _right_top_point.get_y() + (_left_bottom_point.get_y() * _left_bottom_point.get_y()));
+	double b = sqrt(((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) - 2 * _right_bottom_point.get_x() * _right_top_point.get_x() + ((_right_top_point.get_x()) * (_right_top_point.get_x())) + ((_right_bottom_point.get_y()) * (_right_bottom_point.get_y())) - 2 * _right_top_point.get_y() * _right_bottom_point.get_y() + (_right_top_point.get_y() * _right_top_point.get_y()));
+	double c = sqrt(((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) - 2 * _left_bottom_point.get_x() * _right_bottom_point.get_x() + ((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) + ((_left_bottom_point.get_y()) * (_left_bottom_point.get_y())) - 2 * _right_bottom_point.get_y() * _left_bottom_point.get_y() + (_right_bottom_point.get_y() * _right_bottom_point.get_y()));
+	return ((a + b + c) / 2);
+}
+
+double Rectangle::get_perimetr() const {
+	double a = _right_top_point.get_x() - _left_bottom_point.get_x();
+	double b = _right_top_point.get_y() - _left_bottom_point.get_y();
+	return 2 * (a + b);
 }
 
 //площадь
-double Figure::get_area() const {
-	switch (_type) {
-	case Circle: {
-		double a = (_left_bottom_point.get_x() - _right_top_point.get_x());
-		double b = (_left_bottom_point.get_y() - _right_top_point.get_y());
-		return PI * sqrt((a * a) + (b * b)) * sqrt((a * a) + (b * b));
-	}
-	case Triangle: {
-		double a = sqrt(((_right_top_point.get_x()) * (_right_top_point.get_x())) - 2 * _right_top_point.get_x() * _left_bottom_point.get_x() + ((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) + ((_right_top_point.get_y()) * (_right_top_point.get_y())) - 2 * _left_bottom_point.get_y() * _right_top_point.get_y() + (_left_bottom_point.get_y() * _left_bottom_point.get_y()));
-		double b = sqrt(((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) - 2 * _right_bottom_point.get_x() * _right_top_point.get_x() + ((_right_top_point.get_x()) * (_right_top_point.get_x())) + ((_right_bottom_point.get_y()) * (_right_bottom_point.get_y())) - 2 * _right_top_point.get_y() * _right_bottom_point.get_y() + (_right_top_point.get_y() * _right_top_point.get_y()));
-		double c = sqrt(((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) - 2 * _left_bottom_point.get_x() * _right_bottom_point.get_x() + ((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) + ((_left_bottom_point.get_y()) * (_left_bottom_point.get_y())) - 2 * _right_bottom_point.get_y() * _left_bottom_point.get_y() + (_right_bottom_point.get_y() * _right_bottom_point.get_y()));
-		double p = (a + b + c) / 2;
-		return (sqrt(p * (p - a) * (p - b) * (p - c)));
-	}
-	case Rectangle:
-		return  abs(_right_top_point.get_x() - _left_bottom_point.get_x()) * (_right_top_point.get_y() - _left_bottom_point.get_y());
-	default:
-		throw std::runtime_error("Type error");
-	}
+double Circle::get_area() const {
+	double a = (_left_bottom_point.get_x() - _right_top_point.get_x());
+	double b = (_left_bottom_point.get_y() - _right_top_point.get_y());
+	return PI * sqrt((a * a) + (b * b)) * sqrt((a * a) + (b * b));
+}
+
+double Triangle::get_area() const {
+	double a = sqrt(((_right_top_point.get_x()) * (_right_top_point.get_x())) - 2 * _right_top_point.get_x() * _left_bottom_point.get_x() + ((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) + ((_right_top_point.get_y()) * (_right_top_point.get_y())) - 2 * _left_bottom_point.get_y() * _right_top_point.get_y() + (_left_bottom_point.get_y() * _left_bottom_point.get_y()));
+	double b = sqrt(((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) - 2 * _right_bottom_point.get_x() * _right_top_point.get_x() + ((_right_top_point.get_x()) * (_right_top_point.get_x())) + ((_right_bottom_point.get_y()) * (_right_bottom_point.get_y())) - 2 * _right_top_point.get_y() * _right_bottom_point.get_y() + (_right_top_point.get_y() * _right_top_point.get_y()));
+	double c = sqrt(((_left_bottom_point.get_x()) * (_left_bottom_point.get_x())) - 2 * _left_bottom_point.get_x() * _right_bottom_point.get_x() + ((_right_bottom_point.get_x()) * (_right_bottom_point.get_x())) + ((_left_bottom_point.get_y()) * (_left_bottom_point.get_y())) - 2 * _right_bottom_point.get_y() * _left_bottom_point.get_y() + (_right_bottom_point.get_y() * _right_bottom_point.get_y()));
+	double p = (a + b + c) / 2;
+	return (sqrt(p * (p - a) * (p - b) * (p - c)));
+}
+
+double Rectangle::get_area() const {
+	return  abs(_right_top_point.get_x() - _left_bottom_point.get_x()) * (_right_top_point.get_y() - _left_bottom_point.get_y());
 }
 
 //минимальный обрамл€ющий треугольник
-Figure Figure::get_min_rectangle() const {
-	if (_type == Triangle) {
-		return Figure(Rectangle, _left_bottom_point, Point(_right_bottom_point.get_x(), _right_top_point.get_y()));
-	}
-	if (_type == Circle) {
-		return Figure(Rectangle, _left_bottom_point, _right_top_point);
-	}
-	return Figure(Rectangle, _left_bottom_point, _right_top_point);
+FigurePtr Circle::get_min_rectangle() const {
+	return this->clone();
+//	return std::make_shared<Rectangle>();
 }
 
-std::ostream& Figures::operator<<(std::ostream& stream, const Figure& fig) {
-	if (fig.get_type() == "Triangle")
-		stream << "“ип фигуры: " << fig.get_type() << " \n "
-		<< " Ћева€ нижн€€: x = " << fig.get_left_bottom_point().get_x() << " y = " << fig.get_left_bottom_point().get_y() << "\n"
-		<< " ѕрава нижн€€: x = " << fig.get_right_bottom_point().get_x() << " y = " << fig.get_right_bottom_point().get_y() << "\n"
-		<< " ѕрава€ верхн€€: x = " << fig.get_right_top_point().get_x() << " y = " << fig.get_right_top_point().get_y() << "\n" << endl;
+FigurePtr Triangle::get_min_rectangle() const {
+	return this->clone();
+	//return std::make_shared<Rectangle>(_left_bottom_point, Point(_right_bottom_point.get_x(), _right_top_point.get_y()));
+}
 
-	else
-		stream << "“ип фигуры: " << fig.get_type() << " \n "
-		<< " Ћева€ нижн€€: x = " << fig.get_left_bottom_point().get_x() << " y = " << fig.get_left_bottom_point().get_y() << "\n"
-		<< " ѕрава€ верхн€€: x = " << fig.get_right_top_point().get_x() << " y = " << fig.get_right_top_point().get_y() << "\n" << endl;
-	return stream;
+FigurePtr Rectangle::get_min_rectangle()const {
+	return this->clone();
+}
+
+void Circle::print()const {
+	cout << "Circle" << endl;
+	cout << "..." << endl;
+	_left_bottom_point.print();
+	cout << "..." << endl;
+	_right_top_point.print();
+}
+
+void Triangle::print()const {
+	cout << "Triangle" << endl;
+	cout << "..." << endl;
+	_left_bottom_point.print();
+	cout << "..." << endl;
+	_right_bottom_point.print();
+	cout << "..." << endl;
+	_right_top_point.print();
+}
+
+void Rectangle::print()const {
+	cout << "Rectangle" << endl;
+	cout << "..." << endl;
+	_left_bottom_point.print();
+	cout << "..." << endl;
+	_right_top_point.print();
+}
+
+FigurePtr Circle::clone()const {
+	return make_shared<Circle>(_left_bottom_point, _right_top_point);
+}
+
+FigurePtr Rectangle::clone()const {
+	return make_shared<Rectangle>(_left_bottom_point, _right_top_point);
+}
+
+FigurePtr Triangle::clone()const {
+	return make_shared<Triangle>(_left_bottom_point, _right_bottom_point, _right_top_point);
 }

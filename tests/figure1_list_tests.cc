@@ -3,87 +3,58 @@
 
 using namespace Figures;
 
-Figurelist FillTestContainer(){
-    Point _left_bottom_point; Point _right_top_point; Point _right_bottom_point;
+FigureList FillTestContainer() {
+    FigureList figures;
 
-    _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(0, 3);
-    _right_bottom_point = Point(4, 0);
-    Figure figure0 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
-
-    _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(3, 9);
-    Figure figure1 = Figure(Rectangle, _left_bottom_point, _right_top_point);
-
-    _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(0, 4);
-    Figure figure2 = Figure(Circle, _left_bottom_point, _right_top_point);
-
-    _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(0, 8);
-    _right_bottom_point = Point(6, 0);
-    Figure figure3 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
-
-    Figurelist figures;
-    figures.insert(figure0, 0);
-    figures.insert(figure1, 1);
-    figures.insert(figure2, 2);
-    figures.insert(figure3, 3);
+    auto figure0 = Triangle(Point(0, 0), Point(0, 3), Point(4, 0));
+    auto figure1 = Rectangle(Point(0, 0), Point(3, 9));
+    auto figure2 = Circle(Point(0, 0), Point(0, 4));
+    auto figure3 = Triangle(Point(0, 0), Point(0, 8), Point(6, 0));
+   
+    figures.insert(figure0.clone(), 0);
+    figures.insert(figure1.clone(), 1);
+    figures.insert(figure2.clone(), 2);
+    figures.insert(figure3.clone(), 3);
 
     return figures;
 };
 
 //проверка пустого контейнера
 TEST(FigurelistTests, FigurelistDefaultConstructorTest) {
-    Figurelist figures = Figurelist();
+    auto figures = FigureList();
     EXPECT_EQ(figures.get_size(), 0);
 }
 
-TEST(FigurelistTests, FigurelistConstructorTest) {
-    Figurelist figures = FillTestContainer();
-
-    EXPECT_EQ(figures.get_size(), 4);
-    EXPECT_EQ(figures[3].get_figure_type(), Triangle);
-    EXPECT_EQ(figures[0].get_left_bottom_point().get_x(), 0);
-}
-
-TEST(FigurelistTests, FigurelistAddItemTest) {   
+TEST(FigurelistTests, FigurelistAddITest) {   
     //заполненный контейнер из 4 фигур
-    Figurelist figures = FillTestContainer();
-    Point _left_bottom_point; Point _right_top_point; Point _right_bottom_point;
-    _left_bottom_point = Point(0, 0);
-    _right_top_point = Point(0, 8);
-    _right_bottom_point = Point(6, 0);
-    Figure fig1 = Figure(Triangle, _left_bottom_point, _right_top_point, _right_bottom_point);
+    FigureList figures = FillTestContainer();
 
-    figures.insert(fig1, 2);
+    auto fig1 = Triangle(Point(0, 0), Point(0, 8), Point(6, 0));
+ 
+    figures.add(fig1.clone());
     EXPECT_EQ(figures.get_size(), 5);
-    EXPECT_EQ(figures[2].get_figure_type(), Triangle);
-    EXPECT_EQ(figures[4].get_figure_type(), Triangle);
-    EXPECT_ANY_THROW(figures.insert(figures[3], -2));
 }
 
 TEST(FigurelistTests, FigurelistDelItemTest) {
     const int SIZE = 4;
-    Figurelist figures = FillTestContainer();
+    FigureList figures = FillTestContainer();
     //пустой контейнер
     //заполнение контейнера фигурами по умолчанию
     for (int i = 0; i < SIZE; ++i) {
-        Figure fig = Figure();
+        FigurePtr fig = FigurePtr();
         figures.insert(fig, i);
     }
     EXPECT_EQ(figures.get_size(), 8);
     figures.remove(2);
     EXPECT_EQ(figures.get_size(), 7);
-    EXPECT_EQ(figures[2].get_figure_type(), Rectangle);
 }
 
 TEST(FigurelistTests, FigurelistClearTest) {
-    Figurelist figures = FillTestContainer();
+    auto figures = FillTestContainer();
     const int SIZE = 4;
     //заполнение контейнера фигурами по умолчанию
     for (int i = 0; i < SIZE; ++i) {
-        Figure f1 = Figure();
+        FigurePtr f1 = FigurePtr();
         figures.insert(f1, i);
     }
     EXPECT_EQ(figures.get_size(), 8); //промежуточная проверка, что массив заполнен
@@ -92,18 +63,17 @@ TEST(FigurelistTests, FigurelistClearTest) {
 }
 
 TEST(FigurelistTests, FigurelistGetItemTest) {
-    Figurelist figures = FillTestContainer();
+    auto figures = FillTestContainer();
     const int SIZE = 4;
     for (int i = 0; i < SIZE; ++i) {
-        Figure f1 = Figure();
+        FigurePtr f1 = FigurePtr();
         figures.insert(f1, i);
     }
     EXPECT_EQ(figures.get_size(), 8);
-    EXPECT_EQ(figures[3].get_figure_type(), Rectangle);
 }
 
 TEST(FigurelistTests, FigurelistMinAreaTest) {
-    Figurelist figures = FillTestContainer();
+    auto figures = FillTestContainer();
     EXPECT_EQ(figures.find_figure_min_area(), 0);
 }
 

@@ -1,5 +1,7 @@
 ﻿#include <figure1/menu_figure1.h>
 #include <string.h>
+#include <memory>
+#include <vector>
 
 using namespace Figures;
 using namespace menu;
@@ -27,8 +29,7 @@ int menu::get_key() {
 		return key;
 }
 
-Figure menu::create_figure() {
-	Figure fig;
+FigurePtr menu::create_figure() {
 	int type;
 	Point _left_bottom_point;
 	Point _right_bottom_point;
@@ -50,7 +51,7 @@ Figure menu::create_figure() {
 		cout << "y=";
 		cin >> y2;
 
-		return Figure(Circle, Point(x1, y1), Point(x2, y2));
+		return make_shared <Circle>(Point(x1, y1), Point(x2, y2));
 	}
 	
 	if (type == 2) {
@@ -64,7 +65,7 @@ Figure menu::create_figure() {
 		cout << "y=";
 		cin >> y2;
 
-		return Figure(Rectangle, Point(x1, y1), Point(x2, y2));
+		return make_shared <Rectangle>(Point(x1, y1), Point(x2, y2));
 	}
 
 	if (type == 3) {
@@ -83,7 +84,6 @@ Figure menu::create_figure() {
 		cin >> x3;
 		cout << "y=";
 		cin >> y3;
-
-		return Figure(Triangle, Point(x1, y1), Point(x2, y2), Point(x3, y3));
+		return make_shared <Triangle>(Point(x1, y1), Point(x2, y2), Point(x3, y3));
 	}
 }

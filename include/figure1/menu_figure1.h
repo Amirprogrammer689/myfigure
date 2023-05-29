@@ -7,5 +7,5 @@ namespace menu {
     void text_menu();
     int get_key();
 
-    Figures::Figure create_figure();
+    Figures::FigurePtr create_figure();
 }

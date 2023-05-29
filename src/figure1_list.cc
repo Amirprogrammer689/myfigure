@@ -3,103 +3,81 @@
 using namespace std;
 using namespace Figures;
 
-Figurelist::Figurelist() : _figure(nullptr), _size(0) {}
-
-Figurelist::Figurelist(const Figurelist& copy) : _figure(new FigurePtr[copy._size]), _size(copy._size)
-{
-	for (int i = 0; i < _size; ++i)
-		_figure[i] = new Figure(*copy._figure[i]);
+FigureList::FigureList(const FigureList& other) {
+	const int n = other.get_size();
+	for (int i = 0; i < n; ++i)
+		_Figureslist.push_back(other[i]->clone());
 }
 
-Figurelist& Figurelist::operator=(Figurelist copy) {
-	swap(copy);
+FigureList& FigureList::operator=(FigureList other) {
+	swap(other);
 	return *this;
 }
 
-const Figure& Figurelist::get_figure_by_index(int index) const {
-	if (index < 0 || _size <= index)
-		throw runtime_error("[FigureList::get_figure_by_index] Invalid index");
-	return *_figure[index];
+int FigureList::get_size() const {
+	return _Figureslist.size();
 }
 
-int Figurelist::get_size() const {
-	return _size;
-}
-
-Figure& Figurelist::operator[](int index) {
-	if (index < 0 || _size <= index)
-		throw runtime_error("Invalid index");
-	return *_figure[index];
-}
-
-const Figure& Figurelist::operator[](int index) const {
-	if (index < 0 || _size <= index)
+const FigurePtr FigureList::operator[](int index) const {
+	if (index < 0 || _Figureslist.size() <= index)
 		throw runtime_error("[FigureList::operator[]] Index is out of range");
-	return *_figure[index];
+	return _Figureslist[index];
 }
 
-void Figurelist::add(const Figure& fig) {
-	auto figure = new Figure * [_size + 1];
-	for (int i = 0; i < _size; ++i)
-		figure[i] = _figure[i];
-	figure[_size] = new Figure(fig);
-	delete[] _figure;
-	_figure = figure;
-	++_size;
+FigurePtr FigureList::operator[](int index) {
+	if (index < 0 || _Figureslist.size() <= index)
+		throw runtime_error("Invalid index");
+	return _Figureslist[index];
 }
 
+void FigureList::swap(FigureList& other) {
+	_Figureslist.swap(other._Figureslist);
+}
 
-void Figurelist::insert(Figure fig, int index) {
-	if (index < 0 || _size < index)
+void FigureList::add(FigurePtr fig) {
+	_Figureslist.push_back(fig);
+}
+
+void FigureList::insert(FigurePtr fig, int index) {
+	if (index < 0 || _Figureslist.size() < index)
 		throw runtime_error("[FigureList::insert] Invalid index");
-	auto figure = new Figure * [_size + 1];
-	for (int i = 0; i < _size; ++i)
-		figure[i] = _figure[i];
-	for (int i = _size; i > index; --i)
-		figure[i] = figure[i - 1];
-	figure[index] = new Figure(fig);
-	delete[] _figure;
-	_figure = figure;
-	++_size;
+	_Figureslist.insert(_Figureslist.begin() + index, fig);
 }
 
-void Figurelist::clear() {
-	if (_figure == nullptr)
-		return;
-	for (int i = 0; i < _size; ++i)
-		delete _figure[i];
-	_size = 0;
-	delete[] _figure;
-	_figure = nullptr;
+void FigureList::clear() {
+	_Figureslist.clear();
 }
 
-void Figurelist::remove(int index) {
-	if (index < 0 || _size <= index)
+void FigureList::remove(int index) {
+	if (index < 0 || _Figureslist.size() <= index)
 		throw runtime_error("[FigureList::remove] FigureList is empty");
-	delete _figure[index];
-	for (int i = index; i < _size - 1; ++i)
-		_figure[i] = _figure[i + 1];
-	--_size;
+	_Figureslist.erase(_Figureslist.begin() + index);
 }
 
-void Figurelist::swap(Figurelist& other) {
-	std::swap(_size, other._size);
-	std::swap(_figure, other._figure);
+void FigureList::print() {
+	for (int i = 0; i < _Figureslist.size(); i++) {
+		cout << i + 1 << ") ";
+		_Figureslist[i]->print();
+	}
 }
 
-Figurelist::~Figurelist() {
-	clear();
-}
-
-std::ostream& Figures::operator<<(std::ostream& stream, const Figurelist& fig) {
-	stream << fig.get_size() << " figure: " << endl;
-	for (int i = 0; i < fig.get_size(); ++i)
-		cout << "  " << i + 1 << ") " << fig[i];
-	return stream;
+int FigureList::find_figure_min_area() const {
+	if (_Figureslist.size() <= 0)
+		return -1;
+	int index = 0;
+	float min_area = _Figureslist[0]->get_area();
+	for (int i = 1; i < _Figureslist.size(); i++) {
+		float current_area = _Figureslist[i]->get_area();
+		if (current_area < min_area) {
+			index = i;
+			min_area = current_area;
+		}
+	}
+	return index;
 }
 
 //минимальная площадь
-int Figurelist::find_figure_min_area() const {
+/*int Figurelist::find_figure_min_area() const {
 	if (_size <= 0)
 		return -1;
 	int index = 0;
@@ -112,4 +90,4 @@ int Figurelist::find_figure_min_area() const {
 		}
 	}
 	return index;
-}
+}*/
